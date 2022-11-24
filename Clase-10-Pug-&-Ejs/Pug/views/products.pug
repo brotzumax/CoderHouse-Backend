@@ -1,0 +1,23 @@
+h2 Lista de productos 
+
+if notEmpty 
+    table 
+        thead 
+            tr 
+                th Nombre del producto 
+                th Precio 
+                th Icono
+        
+        tbody
+            each producto in productos
+                tr 
+                    td=producto.title
+                    td=producto.price 
+                    td
+                        img(src=producto.thumbnail, alt=producto.title)
+    
+else
+    div No se encontraron productos
+
+form(action="http://localhost:8080/", method="get")
+    button Cargar un nuevo producto

@@ -1,0 +1,26 @@
+style(type="text/css").
+    form {
+            margin: 20px;
+            display: inline-flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+    button {
+        width: 100%;
+    }
+
+div
+    form(action="http://localhost:8080/productos" method="POST") 
+        span Nombre del producto:    
+            input(type="text" name="title" id="title")
+        span Precio:    
+            input(type="number" name="price" id="price")
+        span URL imagen:    
+            input(type="text" name="thumbnail" id="thumbnail")
+        button Enviar
+
+form(action="http://localhost:8080/productos", method="get")
+    button Ver productos guardados
+            

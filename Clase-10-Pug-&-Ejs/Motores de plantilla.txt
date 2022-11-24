@@ -1,0 +1,3 @@
+Luego de haber usado los tres, el que más me convenció fué Ejs. El sistema de Pug no es para nada intuitivo por sus tabulaciones y algo feo a la hora
+de leer el código. Hbs mejora un poco en el asunto, pero es algo complicado agarrale la mano a su forma de utilizar bucles y condicionales. Ejs me parece
+más cómodo ya que es muy similar a tratar como si fuera JS puro.

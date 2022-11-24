@@ -1,0 +1,28 @@
+<h2>Lista de productos</h2>
+
+<% if (notEmpty) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre del producto</th>
+                <th>Precio</th>
+                <th>Icono</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let producto of productos) { %>
+            <tr>
+                <td><%=producto.title%></td>
+                <td><%=producto.title%></td>
+                <td><img src=<%=producto.thumbnail%> alt=<%=producto.title%>></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } else { %>
+    <div>No se encontraron productos</div>
+<% } %>
+
+    <form action="http://localhost:8080" method="GET">
+        <button>Cargar un nuevo producto</button>
+    </form>

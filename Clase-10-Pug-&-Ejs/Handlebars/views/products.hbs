@@ -1,0 +1,28 @@
+<h2>Lista de productos</h2>
+
+{{#if notEmpty}}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre del producto</th>
+            <th>Precio</th>
+            <th>Icono</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each productos}}
+        <tr>
+            <td>{{this.title}}</td>
+            <td>{{this.price}}</td>
+            <td><img src={{this.thumbnail}} alt={{this.title}}></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<div>No se encontraron productos</div>
+{{/if}}
+
+<form action="http://localhost:8080" method="GET">
+    <button>Cargar un nuevo producto</button>
+</form>

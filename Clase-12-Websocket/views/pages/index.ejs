@@ -136,23 +136,27 @@
         }
 
         function sendMessage() {
-            let today = new Date();
-            let dd = String(today.getDate()).padStart(2, '0');
-            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            let yyyy = today.getFullYear();
-            let hours = today.getHours();
-            let minutes = today.getMinutes();
-            let seconds = today.getSeconds();
+            if (document.getElementById('email').value === "") {
+                alert("Campo de email vacío");
+            } else {
+                let today = new Date();
+                let dd = String(today.getDate()).padStart(2, '0');
+                let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                let yyyy = today.getFullYear();
+                let hours = today.getHours();
+                let minutes = today.getMinutes();
+                let seconds = today.getSeconds();
 
-            const message = {
-                text: document.getElementById('message').value,
-                email: document.getElementById('email').value,
-                date: `[${dd}/${mm}/${yyyy} ${hours}:${minutes}:${seconds}]`
+                const message = {
+                    text: document.getElementById('message').value,
+                    email: document.getElementById('email').value,
+                    date: `[${dd}/${mm}/${yyyy} ${hours}:${minutes}:${seconds}]`
+                }
+
+                socket.emit('nuevo-mensaje', message);
+
+                document.getElementById('message').value = "";
             }
-
-            socket.emit('nuevo-mensaje', message);
-
-            document.getElementById('message').value = "";
 
             return false;
         }

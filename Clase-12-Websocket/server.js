@@ -1,17 +1,6 @@
-const productos = [];
-
-function getLastId() {
-    if (productos.length === 0) {
-        return 0;
-    }
-
-    const lastId = productos[(productos.length - 1)].id;
-    return lastId;
-}
-
-
 //Requisitos
 const express = require('express');
+const fs = require('fs');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
 
@@ -22,32 +11,34 @@ const io = new IOServer(httpServer);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Handlebars
-const handlebars = require('express-handlebars');
-app.engine("hbs", handlebars.engine());
-app.set("view engine", "hbs");
-
+//Ejs
+app.set('view engine', 'ejs');
 
 //Peticiones del servidor
 app.get("/", (req, res) => {
-    const listEmpty = productos.length === 0;
-    res.render("formulario", { productos: productos, notEmpty: !listEmpty });
+    res.render("pages/index");
 });
 
-app.post("/productos", (req, res) => {
-    const producto = req.body;
-    const idAsignado = getLastId() + 1;
-    producto.id = idAsignado;
-    productos.push(producto);
+//Websocket
+io.on('connection', function (socket) {
+    console.log("Cliente conectado");
+    socket.emit('productos', JSON.parse(fs.readFileSync('./products.json', 'utf-8')));
+    io.sockets.emit('mensajes', JSON.parse(fs.readFileSync('./messages.json', 'utf-8')));
 
-    res.redirect("/");
+    socket.on("nuevo-producto", producto => {
+        const products = JSON.parse(fs.readFileSync('./products.json', 'utf-8'));
+        products.push(producto);
+        fs.writeFileSync('./products.json', JSON.stringify(products, null, 2));
+        socket.emit('productos', products);
+    });
+
+    socket.on("nuevo-mensaje", message => {
+        const messages = JSON.parse(fs.readFileSync('./messages.json', 'utf-8'));
+        messages.push(message);
+        fs.writeFileSync('./messages.json', JSON.stringify(messages, null, 2));
+        io.sockets.emit('mensajes', messages);
+    })
 });
-
-app.get("/productos", (req, res) => {
-    const listEmpty = productos.length === 0;
-    res.render("products", { productos: productos, notEmpty: !listEmpty });
-});
-
 
 //Escucha del servidor
 httpServer.listen(8080, () => {

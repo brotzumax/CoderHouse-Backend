@@ -1,0 +1,44 @@
+Creación de base de datos --> use ecommerce
+
+1) -
+db.productos.insert([{title: 'Producto 1', price: 120, humbnail: 'www.ejemplo.com'},{title: 'Producto 2', price: 580, humbnail: 'www.ejemplo.com'},{title: 'Producto 3', price: 900, humbnail: 'www.ejemplo.com'},{title: 'Producto 4', price: 1280, humbnail: 'www.ejemplo.com'},{title: 'Producto 5', price: 1700, humbnail: 'www.ejemplo.com'},{title: 'Producto 6', price: 2300, humbnail: 'www.ejemplo.com'},{title: 'Producto 7', price: 2860, humbnail: 'www.ejemplo.com'},{title: 'Producto 8', price: 3350, humbnail: 'www.ejemplo.com'},{title: 'Producto 9', price: 4320, humbnail: 'www.ejemplo.com'},{title: 'Producto 10', price: 4990, humbnail: 'www.ejemplo.com'}])
+db.messages.insert([{email: 'ejemplo@gmail.com', text: 'Primer mensaje', date: '18/12/2022 15:00:00'},{email: 'ejemplo@gmail.com', text: 'Segundo mensaje', date: '18/12/2022 15:01:00'},{email: 'ejemplo@gmail.com', text: 'Tercer mensaje', date: '18/12/2022 15:02:00'},{email: 'ejemplo@gmail.com', text: 'Cuarto mensaje', date: '18/12/2022 15:03:00'},{email: 'ejemplo@gmail.com', text: 'Quinto mensaje', date: '18/12/2022 15:04:00'},{email: 'ejemplo@gmail.com', text: 'Sexto mensaje', date: '18/12/2022 15:05:00'},{email: 'ejemplo@gmail.com', text: 'Séptimo mensaje', date: '18/12/2022 15:06:00'},{email: 'ejemplo@gmail.com', text: 'Octavo mensaje', date: '18/12/2022 15:07:00'},{email: 'ejemplo@gmail.com', text: 'Noveno mensaje', date: '18/12/2022 15:08:00'},{email: 'ejemplo@gmail.com', text: 'Décimo mensaje', date: '18/12/2022 15:09:00'}])
+
+3) -
+db.productos.find()
+db.messages.find()
+
+4) -
+db.productos.estimatedDocumentCount()
+db.messages.estimatedDocumentCount()
+
+5) -
+    a)
+    db.productos.insertOne({title: 'Producto 11', price: 5000, humbnail: 'www.ejemplo.com'})
+
+    b-i)
+    db.productos.find({"price": {$lt:1000}})
+
+    b-ii)
+    db.productos.find({$and: [{"price": {$gte:1000}},{"price": {$lt:3000}}]})
+
+    b-iii)
+    db.productos.find({"price": {$gt:3000}})
+
+    b-iv)
+    db.productos.find({}, {title:1, _id:0}).skip(2).limit(1).sort({price:1})
+
+    c)
+    db.productos.updateMany({}, {$set: {"stock":100}})
+
+    d)
+    db.productos.updateMany({"price": {$gt:4000}}, {$set: {"stock":0}})
+
+    e)
+    db.productos.deleteMany({"price": {$lt:1000}})
+
+6)
+use admin
+db.createUser({user: "pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce"}]})
+
+Pruebas con servidor con el comando mongod --auth
